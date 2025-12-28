@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -30,14 +31,15 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
+        $data = $request->validated();
         $user = User::create([
-            'tenant_id' => $request->tenant_id ?? null,
-            'role' => $request->role ?? 'MEMBER',
-            'name' => $request->name,
-            'email' => $request->email,
-            'password_hash' => Hash::make($request->password),
+            'tenant_id' => $data['tenant_id'] ?? null,
+            'role' => $data['role'] ?? 'MEMBER',
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password_hash' => Hash::make($data['password']),
             'is_active' => true,
         ]);
 
