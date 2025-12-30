@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Controllers\Api\UserController;
 
 Route::get('/health', [HealthController::class, 'show']);
 Route::resource('users', UserController::class);
+Route::post('/login', [LoginController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
